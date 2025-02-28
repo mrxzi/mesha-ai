@@ -50,6 +50,7 @@ h1 {
     overflow-y: auto; /* Hanya chat box yang bisa di-scroll */
     margin-bottom: 15px;
     background: rgba(255, 255, 255, 0.05);
+    max-height: calc(100vh - 200px); /* Menyesuaikan tinggi chat box */
 }
 
 /* Input Area */
@@ -60,6 +61,7 @@ h1 {
     bottom: 0; /* Posisikan di bagian bawah container */
     background: rgba(0, 0, 0, 0); /* Latar belakang agar terlihat jelas */
     padding: 10px 0; /* Padding untuk jarak */
+    z-index: 1000; /* Pastikan input area di atas elemen lain */
 }
 
 #user-input {
@@ -171,12 +173,12 @@ h1 {
 }
 
 #chat-box::-webkit-scrollbar-thumb {
-    background: linear-gradient(90deg, #00d2ff, #3a7bd5);
+    background: linear-gradient(90deg, #e28743, #b46c35);
     border-radius: 10px;
 }
 
 #chat-box::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(90deg, #00d2ff, #3a7bd5);
+    background: linear-gradient(90deg, #e28743, #b46c35);
     opacity: 0.8;
 }
 
