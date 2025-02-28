@@ -9,6 +9,7 @@ body {
     align-items: center;
     min-height: 100vh;
     color: #fff;
+    overflow: hidden; /* Mencegah scroll seluruh halaman */
 }
 
 .container {
@@ -20,28 +21,33 @@ body {
     max-width: 500px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
     border: 1px solid rgba(255, 255, 255, 0.1);
+    margin: 20px; /* Memberikan jarak dari tepi layar */
+    max-height: 90vh; /* Membatasi tinggi container */
+    display: flex;
+    flex-direction: column;
+    position: relative; /* Untuk memudahkan penyesuaian saat keyboard muncul */
 }
 
 h1 {
     text-align: center;
     margin-bottom: 20px;
-    font-size: 28px;
+    font-size: 28px; /* Ukuran font lebih besar */
     font-weight: 600;
 }
 
 .gradient-text {
-    background: linear-gradient(90deg, #00d2ff, #3a7bd5);
+    background: linear-gradient(90deg, #e28743, #b46c35);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
 /* Chat Box */
 #chat-box {
-    height: 60vh; /* Menggunakan viewport height untuk menyesuaikan ukuran layar */
+    flex: 1; /* Mengisi sisa ruang di container */
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 15px;
-    padding: 15px;
-    overflow-y: auto;
+    padding: 15px; /* Padding lebih besar */
+    overflow-y: auto; /* Hanya chat box yang bisa di-scroll */
     margin-bottom: 15px;
     background: rgba(255, 255, 255, 0.05);
 }
@@ -50,16 +56,20 @@ h1 {
 .input-area {
     display: flex;
     gap: 10px;
+    position: sticky; /* Tetap di bagian bawah */
+    bottom: 0; /* Posisikan di bagian bawah container */
+    background: rgba(0, 0, 0, 0); /* Latar belakang agar terlihat jelas */
+    padding: 10px 0; /* Padding untuk jarak */
 }
 
 #user-input {
     flex: 1;
-    padding: 15px;
+    padding: 15px; /* Padding lebih besar */
     border: none;
     border-radius: 15px;
     background: rgba(255, 255, 255, 0.1);
     color: #fff;
-    font-size: 16px; /* Ukuran font lebih besar untuk mobile */
+    font-size: 16px; /* Ukuran font lebih besar */
     outline: none;
     transition: background 0.3s ease, box-shadow 0.3s ease;
 }
@@ -70,39 +80,39 @@ h1 {
 
 #user-input:focus {
     background: rgba(255, 255, 255, 0.2);
-    box-shadow: 0 0 10px rgba(0, 210, 255, 0.5);
+    box-shadow: 0 0 10px rgba(226, 135, 67, 0.5);
 }
 
 #send-btn {
-    padding: 15px 20px;
-    background: linear-gradient(90deg, #00d2ff, #3a7bd5);
+    padding: 15px 20px; /* Padding lebih besar */
+    background: linear-gradient(90deg, #e28743, #b46c35);
     color: #fff;
     border: none;
     border-radius: 15px;
     cursor: pointer;
-    font-size: 16px; /* Ukuran font lebih besar untuk mobile */
+    font-size: 16px; /* Ukuran font lebih besar */
     font-weight: 600;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 #send-btn:hover {
     transform: scale(1.05);
-    box-shadow: 0 0 15px rgba(0, 210, 255, 0.7);
+    box-shadow: 0 0 15px rgba(226, 135, 67, 0.7);
 }
 
 /* Chat Messages */
 .message {
-    margin-bottom: 15px;
-    padding: 15px;
+    margin-bottom: 15px; /* Margin lebih besar */
+    padding: 15px; /* Padding lebih besar */
     border-radius: 15px;
     max-width: 80%;
     animation: fadeIn 0.5s ease;
     position: relative;
-    font-size: 16px; /* Ukuran font lebih besar untuk mobile */
+    font-size: 16px; /* Ukuran font lebih besar */
 }
 
 .message.user {
-    background: linear-gradient(90deg, #00d2ff, #3a7bd5);
+    background: linear-gradient(90deg, #e28743, #b46c35);
     color: #fff;
     align-self: flex-end;
     margin-left: auto;
@@ -176,31 +186,33 @@ h1 {
         width: 100%;
         height: 100vh;
         border-radius: 0;
-        padding: 10px;
+        padding: 15px; /* Padding lebih besar */
+        margin: 0; /* Menghapus margin untuk tampilan fullscreen di HP */
+        max-height: 100vh; /* Memastikan container tidak melebihi tinggi layar */
     }
 
     h1 {
-        font-size: 24px;
-        margin-bottom: 15px;
+        font-size: 24px; /* Ukuran font lebih besar */
+        margin-bottom: 20px; /* Margin lebih besar */
     }
 
     #chat-box {
-        height: 70vh; /* Lebih besar untuk mobile */
-        padding: 10px;
+        height: calc(100vh - 180px); /* Menyesuaikan tinggi chat box */
+        padding: 15px; /* Padding lebih besar */
     }
 
     #user-input {
-        padding: 12px;
-        font-size: 14px;
+        padding: 15px; /* Padding lebih besar */
+        font-size: 16px; /* Ukuran font lebih besar */
     }
 
     #send-btn {
-        padding: 12px 15px;
-        font-size: 14px;
+        padding: 15px 20px; /* Padding lebih besar */
+        font-size: 16px; /* Ukuran font lebih besar */
     }
 
     .message {
-        padding: 12px;
-        font-size: 14px;
+        padding: 15px; /* Padding lebih besar */
+        font-size: 16px; /* Ukuran font lebih besar */
     }
 }
