@@ -1,9 +1,63 @@
+// Data riwayat chat
+let chatHistory = [];
+let currentChatId = null;
+
+// Event listener untuk tombol New Chat
+document.getElementById('new-chat-btn').addEventListener('click', createNewChat);
+
 // Event listener untuk tombol kirim
 document.getElementById('send-btn').addEventListener('click', sendMessage);
 
-// Event listener untuk menyesuaikan posisi input area saat keyboard muncul
-document.getElementById('user-input').addEventListener('focus', adjustInputArea);
-document.getElementById('user-input').addEventListener('blur', resetInputArea);
+// Event listener untuk toggle sidebar di mobile
+document.getElementById('sidebar-toggle').addEventListener('click', toggleSidebar);
+
+// Fungsi untuk toggle sidebar
+function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const container = document.querySelector('.container');
+
+    if (sidebar.classList.contains('active')) {
+        sidebar.classList.remove('active');
+        container.classList.remove('active');
+    } else {
+        sidebar.classList.add('active');
+        container.classList.add('active');
+    }
+}
+
+// Fungsi untuk membuat chat baru
+function createNewChat() {
+    currentChatId = Date.now(); // Gunakan timestamp sebagai ID chat
+    chatHistory.push({
+        id: currentChatId,
+        messages: []
+    });
+    renderChatHistory();
+    loadChat(currentChatId);
+}
+
+// Fungsi untuk memuat chat berdasarkan ID
+function loadChat(chatId) {
+    const chat = chatHistory.find(chat => chat.id === chatId);
+    if (chat) {
+        currentChatId = chatId;
+        const chatBox = document.getElementById('chat-box');
+        chatBox.innerHTML = ''; // Kosongkan chat box
+        chat.messages.forEach(message => {
+            appendMessage(message.sender, message.text);
+        });
+    }
+}
+
+// Fungsi untuk menampilkan riwayat chat di sidebar
+function renderChatHistory() {
+    const chatList = document.getElementById('chat-list');
+    chatList.innerHTML = chatHistory.map(chat => `
+        <li onclick="loadChat(${chat.id})">
+            Chat ${new Date(chat.id).toLocaleTimeString()}
+        </li>
+    `).join('');
+}
 
 // Fungsi untuk mengirim pesan
 function sendMessage() {
@@ -13,6 +67,12 @@ function sendMessage() {
     // Tampilkan pesan pengguna di chat box
     appendMessage('user', userInput);
 
+    // Simpan pesan ke riwayat chat
+    const currentChat = chatHistory.find(chat => chat.id === currentChatId);
+    if (currentChat) {
+        currentChat.messages.push({ sender: 'user', text: userInput });
+    }
+
     // Kosongkan input field
     document.getElementById('user-input').value = '';
 
@@ -20,6 +80,11 @@ function sendMessage() {
     fetchGeminiResponse(userInput)
         .then(response => {
             appendMessage('ai', response);
+
+            // Simpan respons AI ke riwayat chat
+            if (currentChat) {
+                currentChat.messages.push({ sender: 'ai', text: response });
+            }
         })
         .catch(error => {
             console.error('Error:', error);
@@ -80,25 +145,5 @@ async function fetchGeminiResponse(userInput) {
     }
 }
 
-// Fungsi untuk menyesuaikan posisi input area saat keyboard muncul
-function adjustInputArea() {
-    const inputArea = document.querySelector('.input-area');
-    const chatBox = document.getElementById('chat-box');
-
-    // Hitung tinggi keyboard secara dinamis
-    const viewportHeight = window.innerHeight;
-    const inputAreaHeight = inputArea.offsetHeight;
-    const chatBoxBottom = chatBox.getBoundingClientRect().bottom;
-
-    // Jika input area tertutup oleh keyboard
-    if (chatBoxBottom > viewportHeight - inputAreaHeight) {
-        const offset = chatBoxBottom - (viewportHeight - inputAreaHeight);
-        chatBox.style.marginBottom = `${offset + 10}px`; // Beri ruang ekstra
-    }
-}
-
-// Fungsi untuk mengembalikan posisi input area ke semula saat keyboard hilang
-function resetInputArea() {
-    const chatBox = document.getElementById('chat-box');
-    chatBox.style.marginBottom = '15px'; // Kembalikan ke nilai default
-}
+// Buat chat baru saat pertama kali memuat halaman
+createNewChat();

@@ -8,16 +8,32 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- Tombol Toggle di Luar Sidebar -->
+    <button id="sidebar-toggle" class="sidebar-toggle">☰</button>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <button id="new-chat-btn">Chat Baru</button>
+        <div id="chat-history">
+            <h3>Riwayat Obrolan</h3>
+            <ul id="chat-list">
+                <!-- Daftar riwayat chat akan muncul di sini -->
+            </ul>
+        </div>
+    </div>
+
+    <!-- Main Container -->
     <div class="container">
-        <h1>AI Chat with <span class="gradient-text">MESHA</span></h1>
+        <h1><span class="gradient-text">MESHA</span></h1>
         <div id="chat-box">
             <!-- Chat messages will appear here -->
         </div>
         <div class="input-area">
             <input type="text" id="user-input" placeholder="Ketik pesan Anda di sini...">
-            <button id="send-btn">Kirim</button>
+            <button id="send-btn">Send</button>
         </div>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>
